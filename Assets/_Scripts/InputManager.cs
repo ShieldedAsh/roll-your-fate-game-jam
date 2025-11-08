@@ -34,7 +34,6 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         testCube.transform.rotation = CurrentGyroscope.attitude;
-        testCube.GetComponent<Rigidbody2D>().linearVelocity = CurrentGyroscope.rotationRate;
         GetInput();
 
         if (debugText)
@@ -49,8 +48,8 @@ public class InputManager : MonoBehaviour
     }
     private void Display()
     {
-        debugText.text = $"attitude: {data.attitude}\n" +
-                         $"rotationRate: {data.rotationRate}\n" +
-                         $"accelerationRate: {data.acceleration}";
+        debugText.text = $"attitude: {new Quaternion(Mathf.Round(data.attitude.x * 100) / 100, Mathf.Round(data.attitude.y * 100) / 100, Mathf.Round(data.attitude.z * 100) / 100, Mathf.Round(data.attitude.w * 100) / 100)}\n" +
+                         $"rotationRate: {new Vector3(Mathf.Round(data.rotationRate.x * 100) / 100, Mathf.Round(data.rotationRate.y * 100) / 100, Mathf.Round(data.rotationRate.z * 100) / 100)}\n" +
+                         $"accelerationRate: {new Vector3(Mathf.Round(data.acceleration.x * 100) / 100, Mathf.Round(data.acceleration.y * 100) / 100, Mathf.Round(data.acceleration.z * 100) / 100)}";
     }
 }
