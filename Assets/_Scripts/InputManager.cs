@@ -10,8 +10,7 @@ public struct GyroscopeData
     [Tooltip("The current angle of the device")]
     public Quaternion attitude;
 
-    [Tooltip("the attitude that makes the phone make sense")]
-    public Vector3 PlayerAttitude { get { return new Vector3(attitude.eulerAngles.x + 90, attitude.eulerAngles.y, attitude.eulerAngles.z); } }
+    public Quaternion attitudeOffset;
     [Tooltip("The current rotation velocity of the device")]
     public Vector3 rotationRate;
     [Tooltip("The current acceleration of the device")]
@@ -35,16 +34,22 @@ public class InputManager : MonoBehaviour
     {
         gyro = Input.gyro;
         gyro.enabled = true;
+        SetOffset();
     }
 
     private void Update()
     {
         //perspective is flipped in GetInput() rather than before to reduce stupidity of us -vk
         GetInput();
-        testCube.transform.rotation = Quaternion.Euler(data.attitude.eulerAngles);
+        testCube.transform.rotation = Quaternion.Euler(data.attitude.eulerAngles - data.attitudeOffset.eulerAngles);
 
         if (debugText)
             Display();
+    }
+
+    public void SetOffset()
+    {
+        data.attitudeOffset = GyroFlipper(CurrentGyroscope.attitude);
     }
 
     private void GetInput()
