@@ -48,7 +48,7 @@
                 {
                     "name": "",
                     "id": "2648ede2-8ab8-428c-8ee2-cbe0e81d4765",
-                    "path": "*/{Tilt}",
+                    "path": "<Gamepad>/{Tilt}",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gyroscope Controller",

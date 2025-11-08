@@ -1,21 +1,22 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 public class InputManager : MonoBehaviour
 {
-    private Vector3 v = Vector3.zero;
-
-    private void Update()
+    private void Start()
     {
-        Debug.Log(v);
+        InputSystem.EnableDevice(Gyroscope.current);
+        if (Gyroscope.current.enabled)
+            Debug.Log("Gyroscope is enabled");
+        else
+            Debug.Log("Gyroscope is not enabled");
     }
     public void OnGyroscopeTilt(InputAction.CallbackContext context)
     {
         Vector3 readDir = context.ReadValue<Vector3>();
-        v = readDir;
         Debug.Log(readDir);
-        Debug.Log("Beep!");
     }
     public void OnTilt(InputAction.CallbackContext context)
     {
