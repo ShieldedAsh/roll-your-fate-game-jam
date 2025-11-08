@@ -16,8 +16,6 @@ public struct GyroscopeData
     public Vector3 rotationRate;
     [Tooltip("The current acceleration of the device")]
     public Vector3 acceleration;
-    [Tooltip("The acceleration the user is giving to the device")]
-    public Vector3 userAcceleration;
 }
 public class InputManager : MonoBehaviour
 {
@@ -41,9 +39,9 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        Quaternion flippedGyro = GyroFlipper(gyro.attitude);
-        testCube.transform.rotation = Quaternion.Euler(flippedGyro.eulerAngles);
+        //perspective is flipped in GetInput() rather than before to reduce stupidity of us -vk
         GetInput();
+        testCube.transform.rotation = Quaternion.Euler(data.attitude.eulerAngles);
 
         if (debugText)
             Display();
@@ -51,10 +49,9 @@ public class InputManager : MonoBehaviour
 
     private void GetInput()
     {
-        data.attitude = gyro.attitude;
+        data.attitude = GyroFlipper(gyro.attitude);
         data.rotationRate = gyro.rotationRateUnbiased;
         data.acceleration = gyro.userAcceleration;
-        data.userAcceleration = gyro.userAcceleration;
     }
     private void Display()
     {
