@@ -8,15 +8,12 @@ public class InputManager : MonoBehaviour
 {
     private Vector3 angularVelocity;
     private Quaternion rotation;
-    private bool clicked;
+    private float clicked;
 
     public TextMeshProUGUI text;
     private void Start()
     {
-        if(Gyroscope.current != null)
-        {
-            InputSystem.EnableDevice(Gyroscope.current);
-        }
+        InputSystem.EnableDevice(Gyroscope.current);
     }
 
     private void Update()
@@ -38,6 +35,6 @@ public class InputManager : MonoBehaviour
 
     public void OnTest(InputAction.CallbackContext context)
     {
-        clicked = context.ReadValue<bool>();
+        clicked = context.ReadValue<float>();
     }
 }

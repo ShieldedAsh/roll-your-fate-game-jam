@@ -207,7 +207,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 103833157}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
         m_MethodName: OnVelocityChanged
         m_Mode: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
     m_ActionName: Player/Gyroscope
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 103833157}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
         m_MethodName: OnRotationChanged
         m_Mode: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
     m_ActionName: Player/Rotation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 103833157}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
         m_MethodName: OnTest
         m_Mode: 0
@@ -385,7 +385,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 103833151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53960aca0a1ca174e888811b54373d2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ac000a808cdd52188e59b0b2f989865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 431403194}
