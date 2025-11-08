@@ -28,14 +28,24 @@ public enum InputData
 public class InputManager : MonoBehaviour
 {
     [Header("functions")]
+    [Tooltip("how many seconds should we not read inputs for after one is read")]
     public float pollingDelay;
+    [Tooltip("how fast you have to flick the phone for it to be read as an input")]
     public float flickAcclerationRate;
-    public InputData inputData = InputData.None;
-    public float rotation;
+    [Tooltip("the currently read flick direction")]
+    private InputData inputData = InputData.None;
+    [Tooltip("the current rotation of the phone")]
+    private float rotation;
+    [Tooltip("The current flick direction")]
+    public InputData FlickDirection { get => inputData; }
+    [Tooltip("the current phone rotation")]
+    public float GyroRotation { get => rotation; }
     [Header("Debug stuff")]
     [Tooltip("if checked, displays the gyro's stats")]
     public bool DebugEnabled;
+    [Tooltip("the debug text to be displayed")]
     public TextMeshProUGUI debugText;
+    [Tooltip("the test cube")]
     public Transform testCube;
 
     private Gyroscope gyro;
@@ -99,7 +109,7 @@ public class InputManager : MonoBehaviour
             else if (accleerationRate.y >= flickAcclerationRate)
                 inputData = InputData.FlickAway; //away - maybe doesnt work
             else if (accleerationRate.y <= -flickAcclerationRate)
-                inputData = InputData.FlickTo; // - maybe doesnt work
+                inputData = InputData.FlickTo; //away - maybe doesnt work
         }
         else
         {
