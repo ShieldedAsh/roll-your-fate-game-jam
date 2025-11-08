@@ -6,36 +6,18 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
-                    "name": "GyroscopeTilt",
+                    "name": "Velocity",
                     "type": "Value",
-                    "id": "13394eec-b919-4078-850f-604d5fe2f9f2",
+                    "id": "680a8c8e-d00f-444d-9f86-fd000f041551",
                     "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "tilt",
+                    "name": "Rotation",
                     "type": "Value",
-                    "id": "72c0188f-7e48-4d43-b055-8aa980b2fbb0",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "twist",
-                    "type": "Value",
-                    "id": "28253f3f-1432-43e7-a247-b32aec29f553",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Attitude",
-                    "type": "Value",
-                    "id": "0dfc58e0-754e-4c16-85f1-766174653690",
+                    "id": "650f6fa2-da2a-4be5-99ca-49f93ed6b974",
                     "expectedControlType": "Quaternion",
                     "processors": "",
                     "interactions": "",
@@ -45,45 +27,23 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "f017e844-7911-4ba4-8c77-ad4ec7594e71",
+                    "id": "09b83142-0cdb-43f2-ab3f-c7a1e681065a",
                     "path": "<Gyroscope>/angularVelocity",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gyroscope Controller",
-                    "action": "GyroscopeTilt",
+                    "action": "Velocity",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "2648ede2-8ab8-428c-8ee2-cbe0e81d4765",
-                    "path": "<Gamepad>/{Tilt}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gyroscope Controller",
-                    "action": "tilt",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7b168571-3d0a-4498-8b2a-da503770e8d4",
-                    "path": "*/{Twist}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gyroscope Controller",
-                    "action": "twist",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "66812464-7798-425a-868c-6442d258c9d4",
+                    "id": "af22786b-de3b-48a8-8386-250b2fc45fa9",
                     "path": "<AttitudeSensor>/attitude",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gyroscope Controller",
-                    "action": "Attitude",
+                    "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -672,32 +632,12 @@
             "bindingGroup": "Gyroscope Controller",
             "devices": [
                 {
-                    "devicePath": "<Gyroscope>",
+                    "devicePath": "<Touchscreen>",
                     "isOptional": false,
                     "isOR": false
                 },
                 {
-                    "devicePath": "<Accelerometer>",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<XInputController>/{Tilt}",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<XInputController>/{Twist}",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<DualShockGamepad>/{Tilt}",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<DualShockGamepad>/{Twist}",
+                    "devicePath": "<Sensor>",
                     "isOptional": false,
                     "isOR": false
                 }

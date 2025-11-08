@@ -166,42 +166,6 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 103833157}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnGyroscopeTilt
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 13394eec-b919-4078-850f-604d5fe2f9f2
-    m_ActionName: Player/GyroscopeTilt
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 103833157}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnTilt
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 72c0188f-7e48-4d43-b055-8aa980b2fbb0
-    m_ActionName: Player/tilt
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 28253f3f-1432-43e7-a247-b32aec29f553
-    m_ActionName: Player/twist
-  - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
     m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
@@ -245,7 +209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 103833157}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnAttitude
+        m_MethodName: OnGyroscopeTilt
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -255,8 +219,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 0dfc58e0-754e-4c16-85f1-766174653690
-    m_ActionName: Player/Attitude
+    m_ActionId: 680a8c8e-d00f-444d-9f86-fd000f041551
+    m_ActionName: Player/Gyroscope
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gyroscope Controller
   m_DefaultActionMap: Player

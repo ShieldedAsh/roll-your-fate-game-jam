@@ -5,25 +5,23 @@ using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 public class InputManager : MonoBehaviour
 {
-    public void OnGyroscopeTilt(InputAction.CallbackContext context)
+    private Vector3 angularVelocity;
+    private Quaternion rotation;
+    private void Start()
     {
-        Vector3 readDir = context.ReadValue<Vector3>();
-        Debug.Log(readDir);
+        if(Gyroscope.current != null)
+        {
+            InputSystem.EnableDevice(Gyroscope.current);
+        }
     }
-    public void OnTilt(InputAction.CallbackContext context)
+    public void OnVelocityChanged(InputAction.CallbackContext context)
     {
-        Vector2 readDir = context.ReadValue<Vector2>();
-        Debug.Log(readDir);
+        angularVelocity = context.ReadValue<Vector3>();
+        Debug.Log($"angular velocity: {angularVelocity}");
     }
-    public void OnTwist(InputAction.CallbackContext context)
+    public void OnRotationChanged(InputAction.CallbackContext context)
     {
-        float readDir = context.ReadValue<float>();
-        Debug.Log(readDir);
-    }
-
-    public void OnAttitude(InputAction.CallbackContext context)
-    {
-        Quaternion readDir = context.ReadValue<Quaternion>();
-        Debug.Log(readDir.eulerAngles);
+        rotation = context.ReadValue<Quaternion>();
+        Debug.Log($"rotation: {rotation}");
     }
 }
