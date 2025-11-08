@@ -209,7 +209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 103833157}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnGyroscopeTilt
+        m_MethodName: OnVelocityChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -221,6 +221,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 680a8c8e-d00f-444d-9f86-fd000f041551
     m_ActionName: Player/Gyroscope
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 103833157}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnRotationChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 650f6fa2-da2a-4be5-99ca-49f93ed6b974
+    m_ActionName: Player/Rotation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gyroscope Controller
   m_DefaultActionMap: Player
