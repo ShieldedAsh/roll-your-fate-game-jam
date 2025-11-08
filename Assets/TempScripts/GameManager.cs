@@ -13,25 +13,29 @@ public class GameManager : MonoBehaviour
     
     private GameObject currentStick;
     private Vector3 previousPosition;
-    private BoxCollider2D triggerBox; //The box all the sticks are contained in
-
+    private List<Vector3> fullTrip;
     private bool running;
-    BoxCollider2D leftBox;
-    BoxCollider2D rightBox;
-    BoxCollider2D bottomBox;
+    private int updates;
+
+    private BoxCollider2D triggerBox; //The box all the sticks are contained in
+    private BoxCollider2D leftBox;
+    private BoxCollider2D rightBox;
+    private BoxCollider2D bottomBox;
 
     private void Awake()
     {
+        //SETS UP DICTIONARY AND BASIC GAMEPLAY ITEMS
         stickDict = new Dictionary<GameObject, BoxCollider2D>();
         transform.position = Vector3.zero;
         running = true;
+        fullTrip = new List<Vector3>();
+        updates = 0;
 
         //BOX THAT THE OBJECTS SHALL INHABIT
         triggerBox = gameObject.AddComponent<BoxCollider2D>();
         triggerBox.size = CameraBounds.Instance.screenBounds.size;
         triggerBox.offset = Vector3.zero;
         triggerBox.isTrigger = true;
-        //triggerBox.tag = "triggerBox";
 
         //BORDER OBJECTS SO STICKS STAY ON SCREEN
 
@@ -68,11 +72,18 @@ public class GameManager : MonoBehaviour
         if (running)
         {
             Vector3 currentPosition = currentStick.transform.position;
+            fullTrip.Add(currentPosition);
 
-            if (currentPosition == previousPosition)
+            updates++;
+
+            Debug.Log($"stopped? {CheckStopped()}");
+
+            if (updates % 10 == 0 && CheckStopped())
             {
+                Debug.Log($"updates % 10 = {updates % 10}");
                 currentStick = MakeStick();
             }
+            
 
             else
             {
@@ -94,13 +105,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("making a stick");
         Vector2 spawnPosition = Vector2.zero;
         Vector2 stickScale = stickPrefab.transform.localScale;
+        fullTrip = new List<Vector3>();
         float stickScalar = 0;
         float stickRotate = 0;
 
-        Collider2D spawnBox;
+        BoxCollider2D spawnBox;
         List<Collider2D> colliders;
         int numCollides;
 
+        //CHECKS FOR COLLISIONS AS THE NEW STICK IS SPAWNED
         for (int i = 0; i < 5; i++)
         {
             Debug.Log($"attempt: {i}");
@@ -108,21 +121,26 @@ public class GameManager : MonoBehaviour
             stickScalar = Random.Range(0.5f, 1.5f);
             stickRotate = Random.Range(-45, 45);
 
-            spawnBox = Physics2D.OverlapBox(Vector2.zero, stickScale * stickScalar, stickRotate);
-            spawnBox.offset = spawnPosition; //MOVING TRIGGERBOX?????
+            spawnBox = gameObject.AddComponent<BoxCollider2D>();
+            spawnBox.offset = spawnPosition;
             colliders = new List<Collider2D>();
+
             Physics2D.OverlapCollider(spawnBox, colliders);
             colliders.Remove(rightBox);
             colliders.Remove(leftBox);
             colliders.Remove(bottomBox);
+            colliders.Remove(triggerBox);
+            Destroy(spawnBox);
 
             numCollides = colliders.Count;
 
+            //debug code
             Debug.Log("Colliding with:");
             foreach (Collider2D collider in colliders)
             {
                 Debug.Log(collider.transform.position.x);
             }
+            //POSSIBLE END STATES
             if(numCollides == 0)
             {
                 Debug.Log("success");
@@ -136,6 +154,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("fail");
         }
 
+        //MAKES STICK AND RETURNS IT
         if (running)
         {
             GameObject stick = Instantiate(stickPrefab, spawnPosition, Quaternion.identity); //Makes the stick to be spawned
@@ -169,5 +188,44 @@ public class GameManager : MonoBehaviour
         output = Mathf.Round(output);
         output /= 100;
         return output;
+    }
+
+    /// <summary>
+    /// Checks if the current stick has stopped moving DOESN'T CURRENTLY WORK!!!
+    /// </summary>
+    /// <returns>bool of if the stick has stopped moving</returns>
+    private bool CheckStopped()
+    {
+        if (fullTrip.Count < 3)
+        {
+            return false;
+        }
+
+        List<Vector3> positions = new List<Vector3>();
+
+        for(int i = fullTrip.Count - 3; i < fullTrip.Count; i++)
+        {
+            positions.Add(fullTrip[i]);
+        }
+
+        int inRange = 0;
+
+        for(int i = 0; i < positions.Count - 1; i++)
+        {
+            for(int j = i+1; j < positions.Count; j++)
+            {
+                if (Vector3.Distance(positions[i], positions[j]) < .005)
+                {
+                    inRange++;
+                }
+            }
+        }
+
+        if(inRange == 3)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
