@@ -1,17 +1,26 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 public class InputManager : MonoBehaviour
 {
+    UnityEngine.Gyroscope gyro;
     private void Start()
     {
-        InputSystem.EnableDevice(Gyroscope.current);
-        if (Gyroscope.current.enabled)
-            Debug.Log("Gyroscope is enabled");
-        else
+        gyro = Input.gyro;
+        gyro.enabled = true;
+        //if (UnityEngine.InputSystem.Gyroscope.current.enabled)
+        //    Debug.Log("Gyroscope is enabled");
+        //else
+        {
             Debug.Log("Gyroscope is not enabled");
+            //InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
+        }
+    }
+
+    private void Update()
+    {
+        Debug.Log(gyro.rotationRate);
     }
     public void OnGyroscopeTilt(InputAction.CallbackContext context)
     {
