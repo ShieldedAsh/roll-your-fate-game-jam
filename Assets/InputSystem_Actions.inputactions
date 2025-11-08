@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Attitude",
+                    "type": "Value",
+                    "id": "0dfc58e0-754e-4c16-85f1-766174653690",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": ";Gyroscope Controller",
                     "action": "twist",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "66812464-7798-425a-868c-6442d258c9d4",
+                    "path": "<AttitudeSensor>/attitude",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gyroscope Controller",
+                    "action": "Attitude",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

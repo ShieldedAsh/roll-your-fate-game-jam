@@ -1,27 +1,10 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 public class InputManager : MonoBehaviour
 {
-    UnityEngine.Gyroscope gyro;
-    private void Start()
-    {
-        gyro = Input.gyro;
-        gyro.enabled = true;
-        //if (UnityEngine.InputSystem.Gyroscope.current.enabled)
-        //    Debug.Log("Gyroscope is enabled");
-        //else
-        {
-            Debug.Log("Gyroscope is not enabled");
-            //InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
-        }
-    }
-
-    private void Update()
-    {
-        Debug.Log(gyro.rotationRate);
-    }
     public void OnGyroscopeTilt(InputAction.CallbackContext context)
     {
         Vector3 readDir = context.ReadValue<Vector3>();
@@ -35,5 +18,12 @@ public class InputManager : MonoBehaviour
     public void OnTwist(InputAction.CallbackContext context)
     {
         float readDir = context.ReadValue<float>();
+        Debug.Log(readDir);
+    }
+
+    public void OnAttitude(InputAction.CallbackContext context)
+    {
+        Quaternion readDir = context.ReadValue<Quaternion>();
+        Debug.Log(readDir.eulerAngles);
     }
 }
