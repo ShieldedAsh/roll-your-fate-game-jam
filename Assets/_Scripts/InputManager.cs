@@ -16,10 +16,21 @@ public struct GyroscopeData
     [Tooltip("The current acceleration of the device")]
     public Vector3 acceleration;
 }
+
+public enum InputData
+{
+    None,
+    FlickLeft,
+    FlickRight,
+    FlickTo,
+    FlickAway
+}
 public class InputManager : MonoBehaviour
 {
     [Header("functions")]
     public float flickAcclerationRate;
+    public InputData inputData = InputData.None;
+    public float rotation;
     [Header("Debug stuff")]
     [Tooltip("if checked, displays the gyro's stats")]
     public bool DebugEnabled;
@@ -43,10 +54,14 @@ public class InputManager : MonoBehaviour
     {
         //perspective is flipped in GetInput() rather than before to reduce stupidity of us -vk
         GetInput();
+        ProcessData();
         testCube.transform.rotation = OffsetAttitude;
 
         if (debugText)
             Display();
+
+        if (Input.GetTouch(0).phase == TouchPhase.Began)
+            SetOffset();
     }
 
     public void SetOffset()
@@ -60,15 +75,26 @@ public class InputManager : MonoBehaviour
         data.rotationRate = gyro.rotationRateUnbiased;
         data.acceleration = gyro.userAcceleration;
     }
+
+    private void ProcessData()
+    {
+        rotation = OffsetAttitude.y;
+        Vector3 accleerationRate = CurrentGyroscope.acceleration;
+        if (accleerationRate.x >= flickAcclerationRate)
+            inputData = InputData.FlickLeft;
+        else if (accleerationRate.x <= -flickAcclerationRate)
+            inputData = InputData.FlickRight;
+        else if (accleerationRate.y >= flickAcclerationRate)
+            inputData = InputData.FlickAway;
+        else if (accleerationRate.y <= -flickAcclerationRate)
+            inputData = InputData.FlickTo;
+    }
     private void Display()
     {
-        debugText.text = $"attitude: {Mathf.Round(OffsetAttitude.eulerAngles.x * 100) / 100},\t{Mathf.Round(OffsetAttitude.eulerAngles.y * 100) / 100},\t{Mathf.Round(OffsetAttitude.eulerAngles.z * 100) / 100}\n" +
-                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100},\t{Mathf.Round(data.rotationRate.y * 100) / 100},\t{Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
-                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100},\t{Mathf.Round(data.acceleration.y * 100) / 100},\t{Mathf.Round(data.acceleration.z * 100) / 100}";
-    }
-
-    private Quaternion GyroFlipper(Quaternion q)
-    {
-        return new Quaternion(q.x, q.y, -q.z, -q.w);
+        debugText.text = $"attitude: {Mathf.Round(OffsetAttitude.eulerAngles.x * 100) / 100}, {Mathf.Round(OffsetAttitude.eulerAngles.y * 100) / 100}, {Mathf.Round(OffsetAttitude.eulerAngles.z * 100) / 100}\n" +
+                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100}, {Mathf.Round(data.rotationRate.y * 100) / 100}, {Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
+                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100}, {Mathf.Round(data.acceleration.y * 100) / 100}, {Mathf.Round(data.acceleration.z * 100) / 100}\n" +
+                         $"rotation: {rotation}\n" +
+                         $"acceleration: {inputData.ToString()}";
     }
 }
