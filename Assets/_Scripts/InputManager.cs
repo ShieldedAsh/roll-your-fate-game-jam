@@ -11,7 +11,7 @@ public struct GyroscopeData
     public Quaternion attitude;
 
     [Tooltip("the attitude that makes the phone make sense")]
-    public Vector3 PlayerAttitude { get { return new Vector3(attitude.eulerAngles.x, attitude.eulerAngles.y, attitude.eulerAngles.z); } }
+    public Vector3 PlayerAttitude { get { return new Vector3(attitude.eulerAngles.x + 90, attitude.eulerAngles.y, attitude.eulerAngles.z); } }
     [Tooltip("The current rotation velocity of the device")]
     public Vector3 rotationRate;
     [Tooltip("The current acceleration of the device")]
@@ -54,8 +54,8 @@ public class InputManager : MonoBehaviour
     }
     private void Display()
     {
-        debugText.text = $"attitude: {Mathf.Round(data.attitude.eulerAngles.x * 100) / 100}, {Mathf.Round(data.attitude.eulerAngles.y * 100) / 100}, {Mathf.Round(data.attitude.eulerAngles.z * 100) / 100}\n" +
-                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100}, {Mathf.Round(data.rotationRate.y * 100) / 100}, {Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
-                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100}, {Mathf.Round(data.acceleration.y * 100) / 100}, {Mathf.Round(data.acceleration.z * 100) / 100}";
+        debugText.text = $"attitude: {Mathf.Round(data.attitude.eulerAngles.x * 100) / 100},\t{Mathf.Round(data.attitude.eulerAngles.y * 100) / 100},\t{Mathf.Round(data.attitude.eulerAngles.z * 100) / 100}\n" +
+                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100},\t{Mathf.Round(data.rotationRate.y * 100) / 100},\t{Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
+                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100},\t{Mathf.Round(data.acceleration.y * 100) / 100},\t{Mathf.Round(data.acceleration.z * 100) / 100}";
     }
 }
