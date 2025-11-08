@@ -1,40 +1,51 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
+[Tooltip("data read by a gyroscope")]
+public struct GyroscopeData
+{
+    [Tooltip("The current angle of the device")]
+    public Quaternion attitude;
+    [Tooltip("The current rotation velocity of the device")]
+    public Vector3 rotationRate;
+    [Tooltip("The current acceleration of the device")]
+    public Vector3 acceleration;
+}
 public class InputManager : MonoBehaviour
 {
-    private Vector3 angularVelocity;
-    private Quaternion rotation;
-    private float clicked;
+    [Tooltip("if checked, displays the gyro's stats")]
+    public bool DebugEnabled;
+    public TextMeshProUGUI debugText;
 
-    public TextMeshProUGUI text;
+    private Gyroscope gyro;
+    private static GyroscopeData data;
+    [Tooltip("the current gyroscope's data")]
+    public static GyroscopeData CurrentGyroscope { get => data; }
     private void Start()
     {
-        InputSystem.EnableDevice(Gyroscope.current);
+        gyro = Input.gyro;
+        gyro.enabled = true;
     }
 
     private void Update()
     {
-        text.text = $"angularVelocity: {angularVelocity}\n" +
-                    $"rotation: {rotation}\n" +
-                    $"1 finger press test: {clicked}\n";
-    }
-    public void OnVelocityChanged(InputAction.CallbackContext context)
-    {
-        angularVelocity = context.ReadValue<Vector3>();
-        Debug.Log($"angular velocity: {angularVelocity}");
-    }
-    public void OnRotationChanged(InputAction.CallbackContext context)
-    {
-        rotation = context.ReadValue<Quaternion>();
-        Debug.Log($"rotation: {rotation}");
+        GetInput();
+
+        if (debugText)
+            Display();
     }
 
-    public void OnTest(InputAction.CallbackContext context)
+    private void GetInput()
     {
-        clicked = context.ReadValue<float>();
+        data.attitude = gyro.attitude;
+        data.rotationRate = gyro.rotationRateUnbiased;
+        data.acceleration = gyro.userAcceleration;
+    }
+
+    private void Display()
+    {
+        debugText.text = $"attitude: {data.attitude}\n" +
+                         $"rotationRate: {data.rotationRate}\n" +
+                         $"accelerationRate: {data.acceleration}";
     }
 }
