@@ -51,12 +51,12 @@ public class InputManager : MonoBehaviour
 
     public void SetOffset()
     {
-        data.attitudeOffset = GyroFlipper(CurrentGyroscope.attitude);
+        data.attitudeOffset = CurrentGyroscope.attitude;
     }
 
     private void GetInput()
     {
-        data.attitude = GyroFlipper(gyro.attitude);
+        data.attitude = gyro.attitude;
         data.rotationRate = gyro.rotationRateUnbiased;
         data.acceleration = gyro.userAcceleration;
     }
