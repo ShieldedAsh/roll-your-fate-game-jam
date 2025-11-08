@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TEST",
+                    "type": "Button",
+                    "id": "9e4bf897-d249-410b-8f31-96f7b1ee897c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -44,6 +53,17 @@
                     "processors": "",
                     "groups": ";Gyroscope Controller",
                     "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb8316a7-2faf-4813-9d74-3e54c699936b",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gyroscope Controller",
+                    "action": "TEST",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
