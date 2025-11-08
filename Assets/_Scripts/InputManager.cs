@@ -11,6 +11,7 @@ public struct GyroscopeData
     public Quaternion attitude;
 
     [Tooltip("the attitude that makes the phone make sense")]
+    ///rotation currently works really nice when on the table, but not great when holding vertical
     public Vector3 PlayerAttitude { get { return new Vector3(attitude.eulerAngles.x, attitude.eulerAngles.y, attitude.eulerAngles.z); } }
     [Tooltip("The current rotation velocity of the device")]
     public Vector3 rotationRate;
