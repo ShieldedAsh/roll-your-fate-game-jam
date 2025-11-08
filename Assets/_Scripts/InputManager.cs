@@ -86,6 +86,7 @@ public class InputManager : MonoBehaviour
         if(inputData != InputData.None)
         {
             timer = 0;
+            Debug.Log(inputData.ToString());
             inputData = InputData.None;
         }
         if(timer >= pollingDelay)
@@ -104,7 +105,6 @@ public class InputManager : MonoBehaviour
         {
             timer += Time.deltaTime;
         }
-        Debug.Log($"timer: {timer}");
 
     }
     private void Display()
