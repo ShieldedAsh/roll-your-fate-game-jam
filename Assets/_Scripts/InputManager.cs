@@ -11,12 +11,13 @@ public struct GyroscopeData
     public Quaternion attitude;
 
     [Tooltip("the attitude that makes the phone make sense")]
-    ///rotation currently works really nice when on the table, but not great when holding vertical
-    public Vector3 PlayerAttitude { get { return new Vector3(attitude.eulerAngles.x, attitude.eulerAngles.y, attitude.eulerAngles.z); } }
+    public Vector3 PlayerAttitude { get { return new Vector3(attitude.eulerAngles.x + 90, attitude.eulerAngles.y, attitude.eulerAngles.z); } }
     [Tooltip("The current rotation velocity of the device")]
     public Vector3 rotationRate;
     [Tooltip("The current acceleration of the device")]
     public Vector3 acceleration;
+    [Tooltip("The acceleration the user is giving to the device")]
+    public Vector3 userAcceleration;
 }
 public class InputManager : MonoBehaviour
 {
@@ -40,7 +41,8 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        testCube.transform.rotation = Quaternion.Euler(CurrentGyroscope.PlayerAttitude);
+        Quaternion flippedGyro = GyroFlipper(gyro.attitude);
+        testCube.transform.rotation = Quaternion.Euler(flippedGyro.eulerAngles);
         GetInput();
 
         if (debugText)
@@ -52,11 +54,17 @@ public class InputManager : MonoBehaviour
         data.attitude = gyro.attitude;
         data.rotationRate = gyro.rotationRateUnbiased;
         data.acceleration = gyro.userAcceleration;
+        data.userAcceleration = gyro.userAcceleration;
     }
     private void Display()
     {
-        debugText.text = $"attitude: {Mathf.Round(data.attitude.eulerAngles.x * 100) / 100},\t{Mathf.Round(data.attitude.eulerAngles.y * 100) / 100},\t{Mathf.Round(data.attitude.eulerAngles.z * 100) / 100}\n" +
-                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100},\t{Mathf.Round(data.rotationRate.y * 100) / 100},\t{Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
-                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100},\t{Mathf.Round(data.acceleration.y * 100) / 100},\t{Mathf.Round(data.acceleration.z * 100) / 100}";
+        debugText.text = $"attitude: {Mathf.Round(data.attitude.eulerAngles.x * 100) / 100}, {Mathf.Round(data.attitude.eulerAngles.y * 100) / 100}, {Mathf.Round(data.attitude.eulerAngles.z * 100) / 100}\n" +
+                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100}, {Mathf.Round(data.rotationRate.y * 100) / 100}, {Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
+                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100}, {Mathf.Round(data.acceleration.y * 100) / 100}, {Mathf.Round(data.acceleration.z * 100) / 100}";
+    }
+
+    private Quaternion GyroFlipper(Quaternion q)
+    {
+        return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
 }
