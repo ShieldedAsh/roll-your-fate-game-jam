@@ -128,7 +128,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223500341}
-  - component: {fileID: 223500340}
+  - component: {fileID: 223500343}
+  - component: {fileID: 223500342}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -136,19 +137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &223500340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223500339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30f7510984a4e9445a169822c36bd4a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stickPrefab: {fileID: 6903592985443794625, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
 --- !u!4 &223500341
 Transform:
   m_ObjectHideFlags: 0
@@ -164,6 +152,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &223500342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223500339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac000a808cdd52188e59b0b2f989865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pollingDelay: 0.5
+  flickAcclerationRate: 0.25
+  DebugEnabled: 0
+  debugText: {fileID: 0}
+  testCube: {fileID: 0}
+--- !u!114 &223500343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223500339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f7510984a4e9445a169822c36bd4a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stickPrefab: {fileID: 6903592985443794625, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
 --- !u!1 &2077895090
 GameObject:
   m_ObjectHideFlags: 0
