@@ -556,7 +556,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac000a808cdd52188e59b0b2f989865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flicAcclerationRate: 0
+  pollingDelay: 0.5
+  flickAcclerationRate: 0.25
+  inputData: 0
+  rotation: 0
   DebugEnabled: 1
   debugText: {fileID: 431403194}
   testCube: {fileID: 1162231683}

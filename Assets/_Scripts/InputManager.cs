@@ -28,6 +28,7 @@ public enum InputData
 public class InputManager : MonoBehaviour
 {
     [Header("functions")]
+    public float pollingDelay;
     public float flickAcclerationRate;
     public InputData inputData = InputData.None;
     public float rotation;
@@ -43,6 +44,8 @@ public class InputManager : MonoBehaviour
     public static GyroscopeData CurrentGyroscope { get => data; }
 
     public Quaternion OffsetAttitude { get { return Quaternion.Euler(CurrentGyroscope.attitude.eulerAngles - CurrentGyroscope.attitudeOffset.eulerAngles); } }
+
+    private float timer;
     private void Start()
     {
         gyro = Input.gyro;
@@ -60,7 +63,7 @@ public class InputManager : MonoBehaviour
         if (debugText)
             Display();
 
-        if (Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             SetOffset();
     }
 
@@ -79,15 +82,30 @@ public class InputManager : MonoBehaviour
     private void ProcessData()
     {
         rotation = OffsetAttitude.y;
-        Vector3 accleerationRate = CurrentGyroscope.acceleration;
-        if (accleerationRate.x >= flickAcclerationRate)
-            inputData = InputData.FlickLeft;
-        else if (accleerationRate.x <= -flickAcclerationRate)
-            inputData = InputData.FlickRight;
-        else if (accleerationRate.y >= flickAcclerationRate)
-            inputData = InputData.FlickAway;
-        else if (accleerationRate.y <= -flickAcclerationRate)
-            inputData = InputData.FlickTo;
+
+        if(inputData != InputData.None)
+        {
+            timer = 0;
+            inputData = InputData.None;
+        }
+        if(timer >= pollingDelay)
+        {
+            Vector3 accleerationRate = CurrentGyroscope.acceleration;
+            if (accleerationRate.x >= flickAcclerationRate)
+                inputData = InputData.FlickRight;
+            else if (accleerationRate.x <= -flickAcclerationRate)
+                inputData = InputData.FlickLeft;
+            else if (accleerationRate.y >= flickAcclerationRate)
+                inputData = InputData.FlickAway; //away - maybe doesnt work
+            else if (accleerationRate.y <= -flickAcclerationRate)
+                inputData = InputData.FlickTo; // - maybe doesnt work
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+        Debug.Log($"timer: {timer}");
+
     }
     private void Display()
     {
