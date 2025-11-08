@@ -48,6 +48,8 @@ public class InputManager : MonoBehaviour
 
     [Tooltip("The current flick direction")]
     public InputData FlickDirection { get => inputData; }
+
+    public float Rotation { get => rotation; }
     [Tooltip("the current phone rotation")]
     public float GyroRotation { get => rotation; }
 
