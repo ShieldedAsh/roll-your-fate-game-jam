@@ -19,7 +19,7 @@ public struct GyroscopeData
 public class InputManager : MonoBehaviour
 {
     [Header("functions")]
-    public float flicAcclerationRate;
+    public float flickAcclerationRate;
     [Header("Debug stuff")]
     [Tooltip("if checked, displays the gyro's stats")]
     public bool DebugEnabled;
@@ -30,6 +30,8 @@ public class InputManager : MonoBehaviour
     private static GyroscopeData data;
     [Tooltip("the current gyroscope's data")]
     public static GyroscopeData CurrentGyroscope { get => data; }
+
+    public Quaternion OffsetAttitude { get { return Quaternion.Euler(CurrentGyroscope.attitude.eulerAngles - CurrentGyroscope.attitudeOffset.eulerAngles); } }
     private void Start()
     {
         gyro = Input.gyro;
@@ -41,7 +43,7 @@ public class InputManager : MonoBehaviour
     {
         //perspective is flipped in GetInput() rather than before to reduce stupidity of us -vk
         GetInput();
-        testCube.transform.rotation = Quaternion.Euler(data.attitude.eulerAngles - data.attitudeOffset.eulerAngles);
+        testCube.transform.rotation = OffsetAttitude;
 
         if (debugText)
             Display();
@@ -60,9 +62,9 @@ public class InputManager : MonoBehaviour
     }
     private void Display()
     {
-        debugText.text = $"attitude: {Mathf.Round(data.attitude.eulerAngles.x * 100) / 100}, {Mathf.Round(data.attitude.eulerAngles.y * 100) / 100}, {Mathf.Round(data.attitude.eulerAngles.z * 100) / 100}\n" +
-                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100}, {Mathf.Round(data.rotationRate.y * 100) / 100}, {Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
-                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100}, {Mathf.Round(data.acceleration.y * 100) / 100}, {Mathf.Round(data.acceleration.z * 100) / 100}";
+        debugText.text = $"attitude: {Mathf.Round(OffsetAttitude.eulerAngles.x * 100) / 100},\t{Mathf.Round(OffsetAttitude.eulerAngles.y * 100) / 100},\t{Mathf.Round(OffsetAttitude.eulerAngles.z * 100) / 100}\n" +
+                         $"rotationRate: {Mathf.Round(data.rotationRate.x * 100) / 100},\t{Mathf.Round(data.rotationRate.y * 100) / 100},\t{Mathf.Round(data.rotationRate.z * 100) / 100}\n" +
+                         $"accelerationRate: {Mathf.Round(data.acceleration.x * 100) / 100},\t{Mathf.Round(data.acceleration.y * 100) / 100},\t{Mathf.Round(data.acceleration.z * 100) / 100}";
     }
 
     private Quaternion GyroFlipper(Quaternion q)
