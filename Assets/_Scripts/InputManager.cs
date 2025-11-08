@@ -13,9 +13,13 @@ public struct GyroscopeData
 }
 public class InputManager : MonoBehaviour
 {
+    [Header("functions")]
+    public float flicAcclerationRate;
+    [Header("Debug stuff")]
     [Tooltip("if checked, displays the gyro's stats")]
     public bool DebugEnabled;
     public TextMeshProUGUI debugText;
+    public Transform testCube;
 
     private Gyroscope gyro;
     private static GyroscopeData data;
@@ -29,6 +33,8 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        testCube.transform.rotation = CurrentGyroscope.attitude;
+        testCube.GetComponent<Rigidbody2D>().linearVelocity = CurrentGyroscope.rotationRate;
         GetInput();
 
         if (debugText)
@@ -41,7 +47,6 @@ public class InputManager : MonoBehaviour
         data.rotationRate = gyro.rotationRateUnbiased;
         data.acceleration = gyro.userAcceleration;
     }
-
     private void Display()
     {
         debugText.text = $"attitude: {data.attitude}\n" +
