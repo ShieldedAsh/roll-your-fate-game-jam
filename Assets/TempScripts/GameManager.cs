@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private Dictionary<GameObject, BoxCollider2D> stickDict;
 
     private InputManager manager;
-    private List<GameObject> sticks;
+    public List<GameObject> sticks;
     private GameObject currentStick;
     private Vector3 previousPosition;
     private List<Vector3> fullTrip;
@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     private BoxCollider2D leftBox;
     private BoxCollider2D rightBox;
     private BoxCollider2D bottomBox;
+
+    [SerializeField]
+    [Tooltip ("Reference to the sound manager.")]
+    private GameObject _soundManager;
 
     private void Awake()
     {
@@ -171,6 +175,9 @@ public class GameManager : MonoBehaviour
                     sticks[i].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 }
             }
+
+            //Plays a sound for when a stick spawns
+            _soundManager.GetComponent<SoundManager>().SpawnSound();
             return stick;
         }
         return null;
