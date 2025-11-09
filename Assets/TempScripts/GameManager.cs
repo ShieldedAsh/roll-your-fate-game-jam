@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator LoadNextScene()
     {
         yield return new WaitForSeconds(timeToLoadNextScene);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
     private float GetOpaquePixels()
     {
