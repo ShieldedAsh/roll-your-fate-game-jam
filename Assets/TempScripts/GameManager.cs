@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Android.Types;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +16,8 @@ public class GameManager : MonoBehaviour
     /// Dictionary for sticks: the Object is the key, the collider is the info
     /// </summary>
     private Dictionary<GameObject, BoxCollider2D> stickDict;
+
+    private InputManager manager;
     private List<GameObject> sticks;
     private GameObject currentStick;
     private Vector3 previousPosition;
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        manager = FindFirstObjectByType<InputManager>();
         //SETS UP DICTIONARY AND BASIC GAMEPLAY ITEMS
         stickDict = new Dictionary<GameObject, BoxCollider2D>();
         transform.position = Vector3.zero;
@@ -155,6 +156,7 @@ public class GameManager : MonoBehaviour
         //MAKES STICK AND RETURNS IT
         if (running)
         {
+            //manager.SetOffset();
             GameObject stick = Instantiate(stickPrefabs[Random.Range(0,stickPrefabs.Length)], spawnPosition, Quaternion.identity); //Makes the stick to be spawned
             stick.transform.Rotate(0, 0, stickRotate); //Rotates the stick between -45 and 45 degrees on the z-axis
             //stick.transform.localScale *= stickScalar;

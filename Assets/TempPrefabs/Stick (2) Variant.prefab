@@ -242,6 +242,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 613218389852298706, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 613218389852298706, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 613218389852298706, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+      propertyPath: m_GravityScale
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 613218389852298706, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1637649764748479144, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
       propertyPath: m_Size.x
       value: 0.68
@@ -254,6 +270,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -6055404173834851289, guid: f5661de03161f9f47a5c533c68d5013a, type: 3}
+    - target: {fileID: 4486496484001095425, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6903592985443794625, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
       propertyPath: m_Name
       value: Stick (2) Variant

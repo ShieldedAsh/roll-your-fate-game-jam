@@ -12,6 +12,11 @@ public class StickMover : MonoBehaviour
 
     private void Update()
     {
-        transform.position += new Vector3(manager.Rotation * moveSpeed * Time.deltaTime, 0, 0);
+        transform.position += new Vector3(Mathf.Clamp(manager.Rotation - 180, -1, 1) * moveSpeed * Time.deltaTime, 0, 0);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(this);
     }
 }
