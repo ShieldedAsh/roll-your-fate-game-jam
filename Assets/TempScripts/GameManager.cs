@@ -1,16 +1,24 @@
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Android.Types;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject stickPrefab;
+    //[SerializeField] GameObject stickPrefab;
+    [SerializeField] private GameObject[] stickPrefabs;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private float scoreModifier = 2;
+    [SerializeField] private int sticksUntilFrozen = 5;
+    [SerializeField] private float timeToLoadNextScene = 2;
     /// <summary>
     /// Dictionary for sticks: the Object is the key, the collider is the info
     /// </summary>
     private Dictionary<GameObject, BoxCollider2D> stickDict;
-    
+    private List<GameObject> sticks;
     private GameObject currentStick;
     private Vector3 previousPosition;
     private List<Vector3> fullTrip;
@@ -30,7 +38,7 @@ public class GameManager : MonoBehaviour
         running = true;
         fullTrip = new List<Vector3>();
         updates = 0;
-
+        sticks = new List<GameObject>();
         //BOX THAT THE OBJECTS SHALL INHABIT
         triggerBox = gameObject.AddComponent<BoxCollider2D>();
         triggerBox.size = CameraBounds.Instance.screenBounds.size;
@@ -69,6 +77,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        text.text = $"{GetOpaquePixels():P}";
         if (running)
         {
             Vector3 currentPosition = currentStick.transform.position;
@@ -76,21 +85,14 @@ public class GameManager : MonoBehaviour
 
             updates++;
 
-            Debug.Log($"stopped? {CheckStopped()}");
-
             if (updates % 10 == 0 && CheckStopped())
             {
-                Debug.Log($"updates % 10 = {updates % 10}");
                 currentStick = MakeStick();
             }
-            
-
             else
             {
                 previousPosition = currentPosition;
             }
-
-            Debug.Log(GetPercentCovered() + "%");
         }
     }
 
@@ -104,21 +106,20 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("making a stick");
         Vector2 spawnPosition = Vector2.zero;
-        Vector2 stickScale = stickPrefab.transform.localScale;
+        //Vector2 stickScale = stickPrefab.transform.localScale;
         fullTrip = new List<Vector3>();
-        float stickScalar = 0;
+        //float stickScalar = 0;
         float stickRotate = 0;
 
         BoxCollider2D spawnBox;
         List<Collider2D> colliders;
         int numCollides;
-
         //CHECKS FOR COLLISIONS AS THE NEW STICK IS SPAWNED
         for (int i = 0; i < 5; i++)
         {
             Debug.Log($"attempt: {i}");
             spawnPosition = new Vector2(Random.Range(-1, 1), 4);
-            stickScalar = Random.Range(0.5f, 1.5f);
+            //stickScalar = Random.Range(0.5f, 1.5f);
             stickRotate = Random.Range(-45, 45);
 
             spawnBox = gameObject.AddComponent<BoxCollider2D>();
@@ -135,7 +136,6 @@ public class GameManager : MonoBehaviour
             numCollides = colliders.Count;
 
             //debug code
-            Debug.Log("Colliding with:");
             foreach (Collider2D collider in colliders)
             {
                 Debug.Log(collider.transform.position.x);
@@ -143,33 +143,65 @@ public class GameManager : MonoBehaviour
             //POSSIBLE END STATES
             if(numCollides == 0)
             {
-                Debug.Log("success");
                 break;
             }
             else if (i == 4)
             {
                 running = false;
-                Debug.Log("GAME STOPPED");
+                GameEnd();
             }
-            Debug.Log("fail");
         }
 
         //MAKES STICK AND RETURNS IT
         if (running)
         {
-            GameObject stick = Instantiate(stickPrefab, spawnPosition, Quaternion.identity); //Makes the stick to be spawned
+            GameObject stick = Instantiate(stickPrefabs[Random.Range(0,stickPrefabs.Length)], spawnPosition, Quaternion.identity); //Makes the stick to be spawned
             stick.transform.Rotate(0, 0, stickRotate); //Rotates the stick between -45 and 45 degrees on the z-axis
-            stick.transform.localScale *= stickScalar;
+            //stick.transform.localScale *= stickScalar;
 
-
+            sticks.Add(stick);
             stickDict.Add(stick, stick.GetComponent<BoxCollider2D>());
             previousPosition = Vector3.zero;
-
+            if (sticks.Count >= sticksUntilFrozen)
+            {
+                for (int i = 0; i < sticks.Count - sticksUntilFrozen; i++)
+                {
+                    sticks[i].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                }
+            }
             return stick;
         }
         return null;
     }
 
+    private void GameEnd()
+    {
+        FindFirstObjectByType<ScoreMadoodleThingy>().scorePercent = GetOpaquePixels();
+        StartCoroutine(LoadNextScene());
+        
+    }
+    private IEnumerator LoadNextScene()
+    {
+        yield return new WaitForSeconds(timeToLoadNextScene);
+        SceneManager.LoadScene(1);
+    }
+    private float GetOpaquePixels()
+    {
+        float alphaCutoff = .1f;
+        int colorPixels = 0;
+        foreach(GameObject obj in sticks)
+        {
+            Texture2D texture = obj.GetComponent<SpriteRenderer>().sprite.texture;
+            Color[] colors = texture.GetPixels(0, 0, texture.width, texture.height);
+
+            foreach(Color c in colors)
+                if (c.a > alphaCutoff)
+                    colorPixels++;
+        }
+        float boxPixels = triggerBox.size.x * triggerBox.size.y * 160000 / scoreModifier;
+        float stickPercent = colorPixels / (boxPixels * 1.25f);
+        return stickPercent;
+    }
     /// <summary>
     /// Gets the percentage of the screen that's covered, rounded to 2 decimal places
     /// </summary>

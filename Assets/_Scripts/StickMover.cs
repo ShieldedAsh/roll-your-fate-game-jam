@@ -5,7 +5,6 @@ public class StickMover : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f;
 
     private InputManager manager;
-
     private void Awake()
     {
         manager = FindFirstObjectByType<InputManager>();
