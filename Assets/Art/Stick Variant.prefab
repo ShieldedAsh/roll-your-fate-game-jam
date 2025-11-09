@@ -193,6 +193,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -7835424882072759932, guid: f9ccc7099918d344e8b2f2338ae9ae97, type: 3}
     - target: {fileID: 4486496484001095425, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+      propertyPath: _source
+      value: 
+      objectReference: {fileID: 6542411664003890942}
+    - target: {fileID: 4486496484001095425, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
       propertyPath: moveSpeed
       value: 2
       objectReference: {fileID: 0}
@@ -272,6 +276,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.7666667
       objectReference: {fileID: 0}
+    - target: {fileID: 8923699416468148511, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8725690623986807463, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
     m_RemovedGameObjects: []
@@ -290,6 +298,11 @@ PrefabInstance:
 --- !u!4 &5230867374111099852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7605400826713056301, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
+  m_PrefabInstance: {fileID: 2385792795435806689}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &6542411664003890942 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8923699416468148511, guid: 2f5f4e61f3674464fbd2c8c15a9f0bb3, type: 3}
   m_PrefabInstance: {fileID: 2385792795435806689}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &9138495058455187744 stripped
